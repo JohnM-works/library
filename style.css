@@ -4,19 +4,12 @@
     padding: 0;
 }
 
-.body {
-    display: flex;
-    flex-direction: column;
-    margin: 0;
-}
-
-
 .header {
     display: flex;
     justify-content: center;
     align-items: center;
     background-color: #0499D9;
-    height: 300px;
+    height: 15vh;
 }
 
 .header h1 {
@@ -26,38 +19,38 @@
 
 .container {
     display: flex;
-    flex-grow: 1;
-    
-    min-height: 100vh;
-    min-width: 100vw;
+    align-items: center;
+    flex-direction: column;
+
+    min-height: calc(79vh - 2px);
 }
 
-.container .cards {
+.cards {
     display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    grid-template-rows: repeat(1, 1fr);
+    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+    grid-template-rows: repeat(auto-fit, 1fr);
 
-    gap: 50px;
     margin: 70px auto;
-
+    grid-gap: 50px;
+    width: 90vw;
 }
 
 .card-items {
     display: flex;
     align-items: center;
+    justify-content: center;
     flex-direction: column;
-    overflow: auto;
 
-    height: 100%;
-    width: 350px;
+    padding: 30px;
+    min-height: 600px;
     box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
 }
 
+
 .card-items .card-images img{
     padding: 10px;
-    object-fit: fill;
+    object-fit: cover;
     height: 370px;
-    width: 350px;
 }
 
 .card-title h1{
@@ -121,9 +114,10 @@
     justify-content: center;
     align-items: center;
 
-    font-size: 15rem;
-    height: 250px;
-    width: 250px;
+    margin: 20px;
+    font-size: 5rem;
+    height: 80px;
+    width: 80px;
     border-radius: 50%;
     border: none;
     background-color: #0499D9;
@@ -136,8 +130,12 @@
 }
 
 .footer {
+    display: flex;
+    align-items: center;
+    justify-content: center;
     text-align: center;
     background-color: black;
     padding: 12px;
+    height: 6vh;
 }
 

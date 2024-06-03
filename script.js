@@ -1,16 +1,18 @@
 const modalDisplay = document.querySelector(".modal");
 const addBtn = document.querySelector(".add-button");
 const closeModal = document.querySelector(".close-button");
-const readBtn = document.querySelector(".read");
+const readBtn = document.querySelectorAll(".read");
 
-readBtn.addEventListener("click", () => {
-  if (readBtn.textContent === "Read") {
-    readBtn.textContent = "Unread";
-    readBtn.style.backgroundColor = "#ca1919";
-  } else {
-    readBtn.textContent = "Unread";
-    readBtn.style.backgroundColor = "#53AF44";
-  }
+readBtn.forEach((read) => {
+  read.addEventListener("click", (e) => {
+    if (e.target.textContent === "Read") {
+      e.target.textContent = "Unread";
+      e.target.style.backgroundColor = "#ca1919";
+    } else {
+      e.target.textContent = "Read";
+      e.target.style.backgroundColor = "#53AF44";
+    }
+  });
 });
 
 //Modal

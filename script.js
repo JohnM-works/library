@@ -12,6 +12,10 @@ function Book(title, author, pages, img, read) {
   this.read = read;
 }
 
+Book.prototype.toggleStatus = function () {
+  this.read = !this.read;
+};
+
 function addBookToLibrary(title, author, pages, img, read) {
   const newBook = new Book(title, author, pages, img, read);
   myLibrary.push(newBook);
@@ -42,6 +46,11 @@ function displayBooks() {
     const cardImage = document.createElement("img");
     cardImage.src = `${book.img}`;
 
+    cardImage.addEventListener("error", () => {
+      cardImage.src =
+        "https://upload.wikimedia.org/wikipedia/commons/thumb/a/ac/No_image_available.svg/300px-No_image_available.svg.png";
+    });
+
     const cardTitle = document.createElement("h1");
     cardTitle.textContent = `${book.title}`;
 
@@ -53,11 +62,25 @@ function displayBooks() {
 
     const btnRead = document.createElement("button");
     btnRead.classList.add("read");
-    btnRead.textContent = `Read`;
+    btnRead.textContent = `${book.read ? "Read" : "Unread"}`;
+    btnRead.textContent == "Read"
+      ? (btnRead.style.backgroundColor = "#53AF44")
+      : (btnRead.style.backgroundColor = "#CC4F4F");
+
+    btnRead.addEventListener("click", () => {
+      const index = cardItems.getAttribute("data-index");
+      myLibrary[index].toggleStatus();
+      displayBooks();
+    });
 
     const btnRemove = document.createElement("button");
     btnRemove.classList.add("delete");
-    btnRemove.textContent = `Remove`;
+    btnRemove.textContent = `Delete`;
+
+    btnRemove.addEventListener("click", () => {
+      const index = cardItems.getAttribute("data-index");
+      removeBookToLibrary(index);
+    });
 
     cardContainer.appendChild(cardItems);
     cardItems.appendChild(imageDiv);
@@ -71,9 +94,12 @@ function displayBooks() {
     cardContent.appendChild(cardPages);
     cardButton.appendChild(btnRead);
     cardButton.appendChild(btnRemove);
-
-    console.log(cardItems);
   });
+}
+
+function removeBookToLibrary(index) {
+  myLibrary.splice(index, 1);
+  displayBooks();
 }
 
 //Modal
@@ -86,19 +112,6 @@ closeModal.addEventListener("click", (e) => {
   modalDisplay.style.visibility = "hidden";
 });
 
-/*
-readBtn.forEach((read) => {
-  read.addEventListener("click", (e) => {
-    if (e.target.textContent === "Read") {
-      e.target.textContent = "Unread";
-      e.target.style.backgroundColor = "#ca1919";
-    } else {
-      e.target.textContent = "Read";
-      e.target.style.backgroundColor = "#53AF44";
-    }
-  });
-});
-*/
 addBookToLibrary(
   "Soul",
   "Olivia Wilson",
@@ -107,10 +120,12 @@ addBookToLibrary(
   true
 );
 
+addBookToLibrary("Memory", "Angelina Aludo", 500, "", true);
+
 addBookToLibrary(
-  "Soul",
-  "Olivia Wilson",
-  450,
-  "https://marketplace.canva.com/EAFaQMYuZbo/1/0/1003w/canva-brown-rusty-mystery-novel-book-cover-hG1QhA7BiBU.jpg",
-  true
+  "Memory",
+  "Angelina Aludo",
+  500,
+  "https://d1csarkz8obe9u.cloudfront.net/posterpreviews/contemporary-fiction-night-time-book-cover-design-template-1be47835c3058eb42211574e0c4ed8bf_screen.jpg?ts=1698210220",
+  false
 );

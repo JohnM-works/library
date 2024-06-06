@@ -2,14 +2,13 @@ const myLibrary = [];
 const modalDisplay = document.querySelector(".modal");
 const addBtn = document.querySelector(".add-button");
 const closeModal = document.querySelector(".close-button");
-const readBtn = document.querySelectorAll(".read");
 
 let submitForm = document.querySelector(".main-form-div");
 const bookTitle = document.querySelector("#title");
 const bookAuthor = document.querySelector("#author");
 const bookPages = document.querySelector("#pages");
 const bookImage = document.querySelector("#img-url");
-const bookStatus = document.querySelector('input[type="radio"]');
+const bookStatusRead = document.querySelector("#read");
 
 function Book(title, author, pages, img, read) {
   this.title = title;
@@ -23,8 +22,8 @@ Book.prototype.toggleStatus = function () {
   this.read = !this.read;
 };
 
-function addBookToLibrary(title, author, pages, img, read) {
-  const newBook = new Book(title, author, pages, img, read);
+function addBookToLibrary(title, author, pages, img, readStatus) {
+  const newBook = new Book(title, author, pages, img, readStatus);
   myLibrary.push(newBook);
   displayBooks();
 }
@@ -119,15 +118,22 @@ function removeBookToLibrary(index) {
 submitForm.addEventListener("submit", function (e) {
   e.preventDefault();
 
+  const readStatus = bookStatusRead.checked
+    ? (bookStatusRead.value = true)
+    : (bookStatusRead.value = false);
+
   const title = bookTitle.value;
   const author = bookAuthor.value;
   const pages = bookPages.value;
   const img = bookImage.value;
-  const read = bookStatus.value;
 
-  read = "Read";
+  console.log(readStatus);
+  console.log(title);
+  console.log(author);
+  console.log(pages);
+  console.log(img);
 
-  addBookToLibrary(title, author, pages, img, read);
+  addBookToLibrary(title, author, pages, img, readStatus);
 
   submitForm.reset();
 
@@ -147,7 +153,7 @@ closeModal.addEventListener("click", () => {
   bookAuthor.value = "";
   bookPages.value = "";
   bookImage.value = "";
-  bookStatus.checked = "";
+  bookStatus.checked = bookStatusRead;
 });
 
 addBookToLibrary(

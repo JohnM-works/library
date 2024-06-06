@@ -109,11 +109,13 @@ function displayBooks() {
     cardButton.appendChild(btnRemove);
   });
 }
-
+//removed book event
 function removeBookToLibrary(index) {
   myLibrary.splice(index, 1);
   displayBooks();
 }
+
+//form events
 
 submitForm.addEventListener("submit", function (e) {
   e.preventDefault();
@@ -140,7 +142,7 @@ submitForm.addEventListener("submit", function (e) {
   modalDisplay.style.visibility = "hidden";
 });
 
-//Modal
+//Modal events
 addBtn.addEventListener("click", (e) => {
   e.preventDefault();
   modalDisplay.style.visibility = "visible";
@@ -156,6 +158,15 @@ closeModal.addEventListener("click", () => {
   bookStatus.checked = bookStatusRead;
 });
 
+//manually add book
+addBookToLibrary(
+  "Pride And Prejudice",
+  "Jane Austen",
+  600,
+  "https://cdn.kobo.com/book-images/afcd8653-3b27-4423-bee9-570fb1441aed/1200/1200/False/pride-and-prejudice-71.jpg",
+  true
+);
+
 addBookToLibrary(
   "Soul",
   "Olivia Wilson",
@@ -169,5 +180,5 @@ addBookToLibrary(
   "Angelina Aludo",
   500,
   "https://d1csarkz8obe9u.cloudfront.net/posterpreviews/contemporary-fiction-night-time-book-cover-design-template-1be47835c3058eb42211574e0c4ed8bf_screen.jpg?ts=1698210220",
-  false
+  true
 );

@@ -4,6 +4,13 @@ const addBtn = document.querySelector(".add-button");
 const closeModal = document.querySelector(".close-button");
 const readBtn = document.querySelectorAll(".read");
 
+let submitForm = document.querySelector(".main-form-div");
+const bookTitle = document.querySelector("#title");
+const bookAuthor = document.querySelector("#author");
+const bookPages = document.querySelector("#pages");
+const bookImage = document.querySelector("#img-url");
+const bookStatus = document.querySelector('input[type="radio"]');
+
 function Book(title, author, pages, img, read) {
   this.title = title;
   this.author = author;
@@ -43,26 +50,32 @@ function displayBooks() {
     const cardButton = document.createElement("div");
     cardButton.classList.add("card-button");
 
+    //book image
     const cardImage = document.createElement("img");
     cardImage.src = `${book.img}`;
 
-    cardImage.addEventListener("error", () => {
-      cardImage.src =
-        "https://upload.wikimedia.org/wikipedia/commons/thumb/a/ac/No_image_available.svg/300px-No_image_available.svg.png";
+    cardImage.addEventListener("error", (e) => {
+      e.target.src =
+        "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSSDXslEygIMFZ7idMhPxbHG6vDRtehix0NDg&s";
     });
 
+    //Title of the Book
     const cardTitle = document.createElement("h1");
     cardTitle.textContent = `${book.title}`;
 
+    //Author of the book
     const cardAuthor = document.createElement("p");
     cardAuthor.textContent = `By ${book.author}`;
 
+    //number of pages
     const cardPages = document.createElement("p");
     cardPages.textContent = `${book.pages} Pages`;
 
+    //read button
     const btnRead = document.createElement("button");
     btnRead.classList.add("read");
     btnRead.textContent = `${book.read ? "Read" : "Unread"}`;
+
     btnRead.textContent == "Read"
       ? (btnRead.style.backgroundColor = "#53AF44")
       : (btnRead.style.backgroundColor = "#CC4F4F");
@@ -73,6 +86,7 @@ function displayBooks() {
       displayBooks();
     });
 
+    //remove button
     const btnRemove = document.createElement("button");
     btnRemove.classList.add("delete");
     btnRemove.textContent = `Delete`;
@@ -102,14 +116,38 @@ function removeBookToLibrary(index) {
   displayBooks();
 }
 
+submitForm.addEventListener("submit", function (e) {
+  e.preventDefault();
+
+  const title = bookTitle.value;
+  const author = bookAuthor.value;
+  const pages = bookPages.value;
+  const img = bookImage.value;
+  const read = bookStatus.value;
+
+  read = "Read";
+
+  addBookToLibrary(title, author, pages, img, read);
+
+  submitForm.reset();
+
+  modalDisplay.style.visibility = "hidden";
+});
+
 //Modal
-addBtn.addEventListener("click", () => {
+addBtn.addEventListener("click", (e) => {
+  e.preventDefault();
   modalDisplay.style.visibility = "visible";
 });
 
-closeModal.addEventListener("click", (e) => {
-  e.preventDefault();
+closeModal.addEventListener("click", () => {
   modalDisplay.style.visibility = "hidden";
+
+  bookTitle.value = "";
+  bookAuthor.value = "";
+  bookPages.value = "";
+  bookImage.value = "";
+  bookStatus.checked = "";
 });
 
 addBookToLibrary(
@@ -119,8 +157,6 @@ addBookToLibrary(
   "https://marketplace.canva.com/EAFaQMYuZbo/1/0/1003w/canva-brown-rusty-mystery-novel-book-cover-hG1QhA7BiBU.jpg",
   true
 );
-
-addBookToLibrary("Memory", "Angelina Aludo", 500, "", true);
 
 addBookToLibrary(
   "Memory",
